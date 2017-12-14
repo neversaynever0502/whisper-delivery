@@ -2,7 +2,6 @@
 
 密語傳遞 (v0.0.1)
 
-## Port
+## Demo temporary URL
 
-Frontend(port 3001, proxy port 3000)
-Backend(port 3000)
+http://www.cashflowrace.com

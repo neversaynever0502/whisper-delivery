@@ -19,9 +19,7 @@ async function checkPassport(req,res,next){
 }
 
 async function writeLeter(req,res,next){
-  console.log('@@@,',req.body)
   const {title,message,fromName,toName}=req.body;
-  console.log('!!!!',title,message,fromName,toName)
   try{
   const newLetter = new models.Letter({
     fromName,

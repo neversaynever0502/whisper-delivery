@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // import './App.css';
 import 'antd/dist/antd.css';
-import { Layout, Menu, Breadcrumb, Icon ,Row, Col,Input,Button} from 'antd';
+import { Layout, Menu, Breadcrumb, Icon ,Row, Col,Input,Button,Modal} from 'antd';
 const { Header, Content, Footer, Sider } = Layout;
 const SubMenu = Menu.SubMenu;
 
@@ -11,7 +11,9 @@ class ReadLetters extends React.Component {
     this.state={
       users: [],
       collapsed: false,
-      value:{}
+      value:{},
+      visible: false,
+      letterContent:''
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -45,8 +47,10 @@ class ReadLetters extends React.Component {
       console.log(resJson.passport)
       if(resJson.message=="密碼錯誤"){
         alert("通關密語錯囉！請再確認！")
+      }else{
+      // alert("密語傳遞內容："+resJson.message)
+      this.showModal(resJson.message)
       }
-      alert("密語傳遞內容："+resJson.message)
       //回到上一層
     })
     .catch((e)=>{
@@ -66,6 +70,25 @@ class ReadLetters extends React.Component {
       .then(users => this.setState({ users }));
   }
 
+  showModal = (content) => {
+    this.setState({
+      visible: true,
+      letterContent:content
+    });
+  }
+  handleOk = (e) => {
+    console.log(e);
+    this.setState({
+      visible: false,
+    });
+  }
+  handleCancel = (e) => {
+    console.log(e);
+    this.setState({
+      visible: false,
+    });
+  }
+
   render() {
     return(
       <div>
@@ -75,6 +98,15 @@ class ReadLetters extends React.Component {
         </Breadcrumb>
         <div style={{ padding: 24, background: '#fff', minHeight: 720 }}>
         密語傳遞
+        <Modal
+          title="密語傳遞內容"
+          visible={this.state.visible}
+          onOk={this.handleOk}
+          onCancel={this.handleCancel}
+        >
+          <p>{this.state.letterContent}</p>
+          
+        </Modal>
           <div style={{padding:20}}>
             <Row type="flex" justify="center">
               {this.state.users.map(user =>
